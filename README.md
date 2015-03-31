@@ -31,22 +31,22 @@ These are all the available stylables from XML:
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:selectorPosition="over"
-        app:strokePosition="inside"
-        app:filled="false"
-        app:fillAlpha="0.5"
-        app:fillColor="@android:color/darker_gray"
-        app:strokeColor="@android:color/white"
-        app:strokeWidth="3dp"
-        app:cornerRadius="3dp"
-        app:marginLeft="0dp
-        app:marginTop="0dp"
-        app:marginRight="0dp"
-        app:marginBottom="0dp"
-        app:spacingLeft="0dp"
-        app:spacingTop="0dp"
-        app:spacingRight="0dp"
-        app:spacingBottom="0dp"
+        app:nt_selectorPosition="over"
+        app:nt_strokePosition="inside"
+        app:nt_filled="false"
+        app:nt_fillAlpha="0.5"
+        app:nt_fillColor="@android:color/darker_gray"
+        app:nt_strokeColor="@android:color/white"
+        app:nt_strokeWidth="3dp"
+        app:nt_cornerRadius="3dp"
+        app:nt_marginLeft="0dp
+        app:nt_marginTop="0dp"
+        app:nt_marginRight="0dp"
+        app:nt_marginBottom="0dp"
+        app:nt_spacingLeft="0dp"
+        app:nt_spacingTop="0dp"
+        app:nt_spacingRight="0dp"
+        app:nt_spacingBottom="0dp"
 
 ### JAVA
 You can modify the View programtically in Java as well, like this:
@@ -84,6 +84,31 @@ You can also set a focus and a selected color. Why you might want to do this is 
     
 6) Watch the magic happen!
 
+attr  | type | comment
+------------- | -------------
+nt_selectorPosition  | enum | Place the selector over or under the cell
+nt_strokePosition  | enum | Stroke can be placed inside, center or ourside of the edge of the cell
+nt_filled | boolean | Indicate if the selector should have a fill color
+nt_fillAlpha | float | Opacity of the fill color
+nt_fillColor | color | Fill color
+nt_strokeColor | color | Stroke color
+nt_strokeWidth | dimen | The strokes width. If set to 0, there will be no stroke
+nt_cornerRadius | dimen | Corner radius of the selector. 0 is square.
+nt_marginLeft | dimen | Margin left, this pushes the selector inwards 
+nt_marginLeft | dimen | Margin left, this pushes the selector inwards 
+nt_marginLeft | dimen | Margin left, this pushes the selector inwards 
+nt_marginLeft | dimen | Margin left, this pushes the selector inwards 
+nt_marginLeft | dimen | Margin left, this pushes the selector inwards 
+        <attr name="nt_strokeWidth" format="dimension"/>
+        <attr name="nt_cornerRadius" format="dimension"/>
+        <attr name="nt_marginLeft" format="dimension"/>
+        <attr name="nt_marginTop" format="dimension"/>
+        <attr name="nt_marginRight" format="dimension"/>
+        <attr name="nt_marginBottom" format="dimension"/>
+        <attr name="nt_spacingLeft" format="dimension"/>
+        <attr name="nt_spacingTop" format="dimension"/>
+        <attr name="nt_spacingRight" format="dimension"/>
+        <attr name="nt_spacingBottom" format="dimension"/>
 ## Licence
 
     Copyright 2015 Sam Mathias Weggersen
