@@ -8,7 +8,7 @@
     android:padding="@dimen/recycle_view_padding"
     android:clipToPadding="false"
     android:background="@android:color/darker_gray"
-    app:nt_animateSelectorChanges="true"
+    app:nt_animateSelectorChanges="false"
     app:nt_selectorPosition="over"
     app:nt_strokePosition="inside"
     app:nt_strokeColor="@android:color/white"

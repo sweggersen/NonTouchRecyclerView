@@ -247,27 +247,34 @@ public class StrokeRecyclerView extends RecyclerView {
      * Sets a stroke to the given view
      */
     public void highlightView(final View view, boolean focused) {
-        if (view == null) return;
         mStrokeColor = focused ? mStrokeColorFocused : mStrokeColorSelected;
 
+        if (view == null) return;
         if (mAnimateSelectorChanges && mStrokeCell != null) {
             if (mSelectorAnimationSet.isRunning()) {
                 mSelectorAnimationSet.cancel();
-
-                setCorrectBounds(view);
-                performSelectorAnimation();
+                prepareAndPerformSelectorAnimation(view);
             } else {
                 mStrokeCellPrevBound = new Rect(mStrokeCellCurrentBounds);
-                setCorrectBounds(view);
-                performSelectorAnimation();
+                prepareAndPerformSelectorAnimation(view);
             }
         } else {
             hardUpdateSelector(view);
         }
     }
 
+    private void prepareAndPerformSelectorAnimation(View view) {
+        if (mStrokeColorFocused == mStrokeColorSelected) {
+            setCorrectBounds(view);
+        } else {
+            mStrokeCell = getAndAddStrokedView(view);
+        }
+        performSelectorAnimation();
+    }
+
     private void hardUpdateSelector(View view) {
         mStrokeCell = getAndAddStrokedView(view);
+        mStrokeCell.setBounds(mStrokeCellCurrentBounds);
         invalidate();
     }
 
@@ -317,10 +324,8 @@ public class StrokeRecyclerView extends RecyclerView {
     private Drawable getAndAddStrokedView(View v) {
         setCorrectBounds(v);
 
-        BitmapDrawable drawable = new BitmapDrawable(getResources(), getBitmap(v.getWidth(), v.getHeight()));
-        drawable.setBounds(mStrokeCellCurrentBounds);
-
-        return drawable;
+        if (mStrokeCell != null) return mStrokeCell;
+        return new BitmapDrawable(getResources(), getBitmap(v.getWidth(), v.getHeight()));
     }
 
     private void setCorrectBounds(View v) {
