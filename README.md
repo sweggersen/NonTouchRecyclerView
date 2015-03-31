@@ -26,7 +26,7 @@ RecyclerView for devices using arrow keys or D-Pad to navigate. (Of course it Wo
 These are all the available stylables from XML:
 
 
-    <developmen.awesome.library.StrokeRecyclerView
+    <no.development.awesome.library.StrokeRecyclerView
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
