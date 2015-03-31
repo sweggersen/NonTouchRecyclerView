@@ -159,7 +159,7 @@ public class StrokeRecyclerView extends RecyclerView {
         mStrokeThickness = width;
     }
 
-    public void setRadius(float radius) {
+    public void setCornerRadius(float radius) {
         mCornerRadiusX = radius;
         mCornerRadiusY = radius;
     }
