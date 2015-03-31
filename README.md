@@ -1,5 +1,5 @@
 # NonTouchRecyclerView
-RecyclerView for devices using arrow keys or D-Pad to navigate. (Ofcourse it Works with touch, but then the selector won't show) The cell selector is the backbone of this library and can be heavily customized.
+RecyclerView for devices using arrow keys or D-Pad to navigate. (Of course it Works with touch, but then the selector won't show) The cell selector is the backbone of this library and can be heavily customized.
 
 ### Screenshot (from the example)
 ![Screenshot](https://raw.githubusercontent.com/samyboy89/NonTouchRecyclerView/master/images/screenshot.png)
@@ -26,7 +26,7 @@ RecyclerView for devices using arrow keys or D-Pad to navigate. (Ofcourse it Wor
 These are all the available stylables from XML:
 
 
-    <developmen.awesome.library.StrokeRecyclerView
+    <no.development.awesome.library.StrokeRecyclerView
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
@@ -67,7 +67,7 @@ You can also set a focus and a selected color. Why you might want to do this is 
     recyclerView.setFocusColor(int color);
     recyclerView.setSelectedColor(int color);
     
-5) In RecyclerView.Adapter onBindView method add these lines:
+5) In RecyclerView.Adapters onBindViewHolder() method, add these lines: (See [Example](https://github.com/samyboy89/NonTouchRecyclerView/blob/master/app/src/main/java/no/development/awesome/nontouchrecyclerview/ExampleMain.java#L80))
 
     holder.itemView.setFocusable(true);
     holder.itemView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
