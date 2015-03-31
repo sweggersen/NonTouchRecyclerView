@@ -1,4 +1,4 @@
-package developmen.awesome.library;
+package no.development.awesome.library;
 
 import android.content.Context;
 import android.content.res.TypedArray;

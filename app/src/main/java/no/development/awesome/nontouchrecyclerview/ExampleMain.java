@@ -1,4 +1,4 @@
-package developmen.awesome.nontouchrecyclerview;
+package no.development.awesome.nontouchrecyclerview;
 
 import android.app.Activity;
 import android.content.Context;
@@ -15,7 +15,7 @@ import android.view.WindowManager;
 import android.widget.AbsListView;
 import android.widget.TextView;
 
-import developmen.awesome.library.StrokeRecyclerView;
+import no.development.awesome.library.StrokeRecyclerView;
 
 public class ExampleMain extends Activity {
 

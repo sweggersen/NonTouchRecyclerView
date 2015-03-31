@@ -21,3 +21,44 @@ android {
 dependencies {
     compile 'com.android.support:recyclerview-v7:21.0.0'
 }
+
+uploadArchives {
+    configuration = configurations.archives
+    repositories.mavenDeployer {
+        beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+        repository(url: sonatypeRepo) {
+            authentication(userName: ossrhUsername, password: ossrhPassword)
+        }
+
+        pom.project {
+            name 'NonTouchRecyclerView'
+            artifactId = 'nontouch-recyclerview'
+            packaging 'aar'
+            description 'RecycleView for DPad naviagtion'
+            url 'https://github.com/samyboy89/NonTouchRecyclerView'
+
+            scm {
+                url 'scm:git@github.com:samyboy89/NonTouchRecyclerView.git'
+                connection 'scm:git@github.com:samyboy89/NonTouchRecyclerView.git'
+                developerConnection 'scm:git@github.com:samyboy89/NonTouchRecyclerView.git'
+            }
+
+            licenses {
+                license {
+                    name 'The Apache Software License, Version 2.0'
+                    url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    distribution 'repo'
+                }
+            }
+
+            developers {
+                developer {
+                    id 'sam.weggersen'
+                    name 'Sam Mathias Weggersen'
+                    email 'awe.dev.sup@gmail.com'
+                }
+            }
+        }
+    }
+}

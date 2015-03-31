@@ -1,4 +1,4 @@
-package developmen.awesome.library;
+package no.development.awesome.library;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

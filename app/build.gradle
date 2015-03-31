@@ -5,7 +5,7 @@ android {
     buildToolsVersion "21.1.2"
 
     defaultConfig {
-        applicationId "developmen.awesome.nontouchrecyclerview"
+        applicationId "no.development.awesome.nontouchrecyclerview"
         minSdkVersion 13
         targetSdkVersion 22
         versionCode 1
