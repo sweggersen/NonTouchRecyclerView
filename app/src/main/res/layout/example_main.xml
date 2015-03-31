@@ -8,9 +8,9 @@
     android:padding="@dimen/recycle_view_padding"
     android:clipToPadding="false"
     android:background="@android:color/darker_gray"
-    app:selectorPosition="over"
-    app:strokePosition="inside"
-    app:strokeColor="@android:color/white"
-    app:strokeWidth="@dimen/cell_stroke_width"
-    app:cornerRadius="@dimen/cell_corner_radius"
-    app:marginBottom="@dimen/cell_bottom_margin"/>
+    app:nt_selectorPosition="over"
+    app:nt_strokePosition="inside"
+    app:nt_strokeColor="@android:color/white"
+    app:nt_strokeWidth="@dimen/cell_stroke_width"
+    app:nt_cornerRadius="@dimen/cell_corner_radius"
+    app:nt_marginBottom="@dimen/cell_bottom_margin"/>

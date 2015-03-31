@@ -18,7 +18,7 @@ import android.util.TypedValue;
 import android.view.View;
 
 /*
-    Copyright [2015] [Sam Mathias Weggersen]
+    Copyright 2015 Sam Mathias Weggersen
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -89,22 +89,22 @@ public class StrokeRecyclerView extends RecyclerView {
             try {
                 mSelectorPosition = SelectorPosition.getSelectorPosition(a.getInteger(R.styleable.StrokeRecyclerView_selectorPosition, getResources().getInteger(R.integer.defSelectorPosition)));
                 mStrokePosition = StrokePosition.getStrokePosition(a.getInteger(R.styleable.StrokeRecyclerView_strokePosition, getResources().getInteger(R.integer.defStrokePosition)));
-                mIsFilled = a.getBoolean(R.styleable.StrokeRecyclerView_filled, getResources().getBoolean(R.bool.defIsFilled));
-                mFillAlpha = a.getFloat(R.styleable.StrokeRecyclerView_fillAlpha, typedValue.getFloat());
-                mFillColor = a.getColor(R.styleable.StrokeRecyclerView_fillColor, getResources().getColor(R.color.defFillColor));
-                mCornerRadiusX = a.getDimension(R.styleable.StrokeRecyclerView_cornerRadius, getResources().getDimension(R.dimen.defCornerRadius));
-                mCornerRadiusY = a.getDimension(R.styleable.StrokeRecyclerView_cornerRadius, getResources().getDimension(R.dimen.defCornerRadius));
-                mStrokeThickness = a.getDimension(R.styleable.StrokeRecyclerView_strokeWidth, getResources().getDimension(R.dimen.defStrokeWidth));
-                mStrokeColorFocused = a.getColor(R.styleable.StrokeRecyclerView_strokeColor, getResources().getColor(R.color.defStrokeColor));
-                mStrokeColorSelected = a.getColor(R.styleable.StrokeRecyclerView_strokeColor, getResources().getColor(R.color.defStrokeColor));
-                mStrokeMarginLeft = a.getDimension(R.styleable.StrokeRecyclerView_marginLeft, getResources().getDimension(R.dimen.defStrokeMarginLeft));
-                mStrokeMarginTop = a.getDimension(R.styleable.StrokeRecyclerView_marginTop, getResources().getDimension(R.dimen.defStrokeMarginTop));
-                mStrokeMarginRight = a.getDimension(R.styleable.StrokeRecyclerView_marginRight, getResources().getDimension(R.dimen.defStrokeMarginRight));
-                mStrokeMarginBottom = a.getDimension(R.styleable.StrokeRecyclerView_marginBottom, getResources().getDimension(R.dimen.defStrokeMarginBottom));
-                mStrokeSpacingLeft = a.getDimension(R.styleable.StrokeRecyclerView_spacingLeft, getResources().getDimension(R.dimen.defStrokeSpacingLeft));
-                mStrokeSpacingTop = a.getDimension(R.styleable.StrokeRecyclerView_spacingTop, getResources().getDimension(R.dimen.defStrokeSpacingTop));
-                mStrokeSpacingRight = a.getDimension(R.styleable.StrokeRecyclerView_spacingRight, getResources().getDimension(R.dimen.defStrokeSpacingRight));
-                mStrokeSpacingBottom = a.getDimension(R.styleable.StrokeRecyclerView_spacingBottom, getResources().getDimension(R.dimen.defStrokeSpacingBottom));
+                mIsFilled = a.getBoolean(R.styleable.StrokeRecyclerView_nt_filled, getResources().getBoolean(R.bool.defIsFilled));
+                mFillAlpha = a.getFloat(R.styleable.StrokeRecyclerView_nt_fillAlpha, typedValue.getFloat());
+                mFillColor = a.getColor(R.styleable.StrokeRecyclerView_nt_fillColor, getResources().getColor(R.color.defFillColor));
+                mCornerRadiusX = a.getDimension(R.styleable.StrokeRecyclerView_nt_cornerRadius, getResources().getDimension(R.dimen.defCornerRadius));
+                mCornerRadiusY = a.getDimension(R.styleable.StrokeRecyclerView_nt_cornerRadius, getResources().getDimension(R.dimen.defCornerRadius));
+                mStrokeThickness = a.getDimension(R.styleable.StrokeRecyclerView_nt_strokeWidth, getResources().getDimension(R.dimen.defStrokeWidth));
+                mStrokeColorFocused = a.getColor(R.styleable.StrokeRecyclerView_nt_strokeColor, getResources().getColor(R.color.defStrokeColor));
+                mStrokeColorSelected = a.getColor(R.styleable.StrokeRecyclerView_nt_strokeColor, getResources().getColor(R.color.defStrokeColor));
+                mStrokeMarginLeft = a.getDimension(R.styleable.StrokeRecyclerView_nt_marginLeft, getResources().getDimension(R.dimen.defStrokeMarginLeft));
+                mStrokeMarginTop = a.getDimension(R.styleable.StrokeRecyclerView_nt_marginTop, getResources().getDimension(R.dimen.defStrokeMarginTop));
+                mStrokeMarginRight = a.getDimension(R.styleable.StrokeRecyclerView_nt_marginRight, getResources().getDimension(R.dimen.defStrokeMarginRight));
+                mStrokeMarginBottom = a.getDimension(R.styleable.StrokeRecyclerView_nt_marginBottom, getResources().getDimension(R.dimen.defStrokeMarginBottom));
+                mStrokeSpacingLeft = a.getDimension(R.styleable.StrokeRecyclerView_nt_spacingLeft, getResources().getDimension(R.dimen.defStrokeSpacingLeft));
+                mStrokeSpacingTop = a.getDimension(R.styleable.StrokeRecyclerView_nt_spacingTop, getResources().getDimension(R.dimen.defStrokeSpacingTop));
+                mStrokeSpacingRight = a.getDimension(R.styleable.StrokeRecyclerView_nt_spacingRight, getResources().getDimension(R.dimen.defStrokeSpacingRight));
+                mStrokeSpacingBottom = a.getDimension(R.styleable.StrokeRecyclerView_nt_spacingBottom, getResources().getDimension(R.dimen.defStrokeSpacingBottom));
             } finally {
                 a.recycle();
             }
