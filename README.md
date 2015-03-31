@@ -31,22 +31,12 @@ These are all the available stylables from XML:
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        app:nt_animateSelectorChanges="true"
         app:nt_selectorPosition="over"
         app:nt_strokePosition="inside"
-        app:nt_filled="false"
-        app:nt_fillAlpha="0.5"
-        app:nt_fillColor="@android:color/darker_gray"
         app:nt_strokeColor="@android:color/white"
         app:nt_strokeWidth="3dp"
         app:nt_cornerRadius="3dp"
-        app:nt_marginLeft="0dp
-        app:nt_marginTop="0dp"
-        app:nt_marginRight="0dp"
-        app:nt_marginBottom="0dp"
-        app:nt_spacingLeft="0dp"
-        app:nt_spacingTop="0dp"
-        app:nt_spacingRight="0dp"
-        app:nt_spacingBottom="0dp"
 
 ### JAVA
 You can modify the View programtically in Java as well, like this:
@@ -75,10 +65,6 @@ You can also set a focus and a selected color. Why you might want to do this is 
         @Override
         public void onFocusChange(final View view, final boolean b) {
             recyclerView.highlightRecyclerView(view, b);
-            
-            // alt if you want selection to dissapear when recycleview looses focus
-            // if (b) mSectionView.highlightRecyclerView(view, true);
-            // else mSectionView.clearHighlightedRecyclerView();
         }
     });
     
@@ -90,6 +76,7 @@ You can also set a focus and a selected color. Why you might want to do this is 
 ------------- | -------------|----------
 nt_selectorPosition  | enum | Place the selector over or under the cell
 nt_strokePosition  | enum | Stroke can be placed inside, center or ourside of the edge of the cell
+nt_animateSelectorChanges | boolean | Cell will animate into position on each keyDown if enabled
 nt_filled | boolean | Indicate if the selector should have a fill color
 nt_fillAlpha | float | Opacity of the fill color
 nt_fillColor | color | Fill color
