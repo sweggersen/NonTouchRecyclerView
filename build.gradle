@@ -19,7 +19,7 @@ allprojects {
     }
 
     group = 'info.awesomedevelopment'
-    version = '1.0.0'
+    version = '1.0.1'
 
     ext.isReleaseVersion = has("release")
     if (isReleaseVersion) {

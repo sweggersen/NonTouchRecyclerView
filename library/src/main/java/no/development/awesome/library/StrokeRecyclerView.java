@@ -1,5 +1,8 @@
 package no.development.awesome.library;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
@@ -15,7 +18,9 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.util.TypedValue;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
 
 /*
     Copyright 2015 Sam Mathias Weggersen
@@ -36,11 +41,13 @@ import android.view.View;
 public class StrokeRecyclerView extends RecyclerView {
 
     private Drawable mStrokeCell;
+    private Rect mStrokeCellPrevBound;
     private Rect mStrokeCellOriginalBounds;
     private Rect mStrokeCellCurrentBounds;
 
     private SelectorPosition mSelectorPosition;
     private StrokePosition mStrokePosition;
+    private boolean mAnimateSelectorChanges;
     private boolean mIsFilled;
     private float mFillAlpha;
     private int mFillColor;
@@ -89,6 +96,7 @@ public class StrokeRecyclerView extends RecyclerView {
             try {
                 mSelectorPosition = SelectorPosition.getSelectorPosition(a.getInteger(R.styleable.StrokeRecyclerView_nt_selectorPosition, getResources().getInteger(R.integer.defSelectorPosition)));
                 mStrokePosition = StrokePosition.getStrokePosition(a.getInteger(R.styleable.StrokeRecyclerView_nt_strokePosition, getResources().getInteger(R.integer.defStrokePosition)));
+                mAnimateSelectorChanges = a.getBoolean(R.styleable.StrokeRecyclerView_nt_animateSelectorChanges, getResources().getBoolean(R.bool.defAnimateSelectorChanges));
                 mIsFilled = a.getBoolean(R.styleable.StrokeRecyclerView_nt_filled, getResources().getBoolean(R.bool.defIsFilled));
                 mFillAlpha = a.getFloat(R.styleable.StrokeRecyclerView_nt_fillAlpha, typedValue.getFloat());
                 mFillColor = a.getColor(R.styleable.StrokeRecyclerView_nt_fillColor, getResources().getColor(R.color.defFillColor));
@@ -111,6 +119,7 @@ public class StrokeRecyclerView extends RecyclerView {
         } else {
             mSelectorPosition = SelectorPosition.getSelectorPosition(getResources().getInteger(R.integer.defSelectorPosition));
             mStrokePosition = StrokePosition.getStrokePosition(getResources().getInteger(R.integer.defStrokePosition));
+            mAnimateSelectorChanges = getResources().getBoolean(R.bool.defAnimateSelectorChanges);
             mIsFilled = getResources().getBoolean(R.bool.defIsFilled);
             mFillAlpha = typedValue.getFloat();
             mFillColor = getResources().getColor(R.color.defFillColor);
@@ -146,7 +155,19 @@ public class StrokeRecyclerView extends RecyclerView {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
+                animSetXY.cancel();
+
+                mStrokeCellCurrentBounds.offsetTo(mStrokeCellCurrentBounds.left - dx, mStrokeCellCurrentBounds.top - dy);
+                performSelectorAnimation();
+
+                // clearHighlightedView();
+            }
+        });
+        setOnTouchListener(new OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
                 clearHighlightedView();
+                return false;
             }
         });
     }
@@ -218,17 +239,62 @@ public class StrokeRecyclerView extends RecyclerView {
         mSelectorPosition = position;
     }
 
+    AnimatorSet animSetXY = new AnimatorSet();
+
     /**
      * Sets a stroke to the given view
      */
-    public void highlightView(View view, boolean focused) {
+    public void highlightView(final View view, boolean focused) {
         if (view == null) return;
         mStrokeColor = focused ? mStrokeColorFocused : mStrokeColorSelected;
+
+        if (mAnimateSelectorChanges && mStrokeCell != null) {
+            if (animSetXY.isRunning()) {
+                animSetXY.cancel();
+
+                setCorrectBounds(view);
+                performSelectorAnimation();
+            } else {
+                mStrokeCellPrevBound = new Rect(mStrokeCellCurrentBounds);
+                setCorrectBounds(view);
+                performSelectorAnimation();
+            }
+        } else {
+            hardUpdateSelector(view);
+        }
+    }
+
+    private void hardUpdateSelector(View view) {
         mStrokeCell = getAndAddStrokedView(view);
-        mStrokeCellCurrentBounds.offsetTo(mStrokeCellOriginalBounds.left,
-                mStrokeCellOriginalBounds.top);
-        mStrokeCell.setBounds(mStrokeCellCurrentBounds);
         invalidate();
+    }
+
+    private void performSelectorAnimation() {
+        ObjectAnimator y = ObjectAnimator.ofInt(mStrokeCell, "y", mStrokeCellPrevBound.top, mStrokeCellCurrentBounds.top);
+        ObjectAnimator x = ObjectAnimator.ofInt(mStrokeCell, "x", mStrokeCellPrevBound.left, mStrokeCellCurrentBounds.left);
+
+        y.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                mStrokeCellPrevBound.offsetTo(mStrokeCellPrevBound.left,
+                        (int) animation.getAnimatedValue());
+                mStrokeCell.setBounds(mStrokeCellPrevBound);
+                invalidate();
+            }
+        });
+        x.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                mStrokeCellPrevBound.offsetTo((int) animation.getAnimatedValue(),
+                        mStrokeCellPrevBound.top);
+                mStrokeCell.setBounds(mStrokeCellPrevBound);
+                invalidate();
+            }
+        });
+        animSetXY.playTogether(x, y);
+        animSetXY.setInterpolator(new AccelerateDecelerateInterpolator());
+        animSetXY.setDuration(200);
+        animSetXY.start();
     }
 
     /**
@@ -236,6 +302,7 @@ public class StrokeRecyclerView extends RecyclerView {
      */
     public void clearHighlightedView() {
         mStrokeCell = null;
+        mStrokeCellPrevBound = null;
         invalidate();
         requestLayout();
     }
@@ -246,6 +313,15 @@ public class StrokeRecyclerView extends RecyclerView {
      * single time an invalidate call is made.
      */
     private Drawable getAndAddStrokedView(View v) {
+        setCorrectBounds(v);
+
+        BitmapDrawable drawable = new BitmapDrawable(getResources(), getBitmap(v.getWidth(), v.getHeight()));
+        drawable.setBounds(mStrokeCellCurrentBounds);
+
+        return drawable;
+    }
+
+    private void setCorrectBounds(View v) {
         int spacing = 0;
         switch (mStrokePosition) {
             case INSIDE:
@@ -266,18 +342,12 @@ public class StrokeRecyclerView extends RecyclerView {
         int top = v.getTop() - ((h_scaled - h) / 2);
         int left = v.getLeft() - ((w_scaled - w) / 2);
 
-        BitmapDrawable drawable = new BitmapDrawable(getResources(), getBitmap(w, h));
-
         mStrokeCellOriginalBounds = new Rect(
                 (int) (left - mStrokeSpacingLeft),
                 (int) (top - mStrokeSpacingTop),
                 (int) (left + w_scaled + mStrokeSpacingRight),
                 (int) (top + h_scaled + mStrokeSpacingBottom));
         mStrokeCellCurrentBounds = new Rect(mStrokeCellOriginalBounds);
-
-        drawable.setBounds(mStrokeCellCurrentBounds);
-
-        return drawable;
     }
 
     /**

@@ -10,6 +10,7 @@
             <enum name="center" value="1"/>
             <enum name="outside" value="2"/>
         </attr>
+        <attr name="nt_animateSelectorChanges" format="boolean"/>
         <attr name="nt_filled" format="boolean"/>
         <attr name="nt_fillAlpha" format="float"/>
         <attr name="nt_fillColor" format="color"/>

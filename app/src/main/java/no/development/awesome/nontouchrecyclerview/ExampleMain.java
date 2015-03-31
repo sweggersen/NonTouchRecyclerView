@@ -88,8 +88,7 @@ public class ExampleMain extends Activity {
 
                 @Override
                 public void onFocusChange(final View view, final boolean b) {
-                    if (b) mRecyclerView.highlightView(view, true);
-                    else mRecyclerView.clearHighlightedView();
+                    mRecyclerView.highlightView(view, b);
                 }
             });
 
