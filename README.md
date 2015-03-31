@@ -67,7 +67,7 @@ You can also set a focus and a selected color. Why you might want to do this is 
     recyclerView.setFocusColor(int color);
     recyclerView.setSelectedColor(int color);
     
-5) In RecyclerView.Adapters onBindView method, add these lines: (See [Example](https://github.com/samyboy89/NonTouchRecyclerView/blob/master/app/src/main/java/no/development/awesome/nontouchrecyclerview/ExampleMain.java))
+5) In RecyclerView.Adapters onBindViewHolder() method, add these lines: (See [Example](https://github.com/samyboy89/NonTouchRecyclerView/blob/master/app/src/main/java/no/development/awesome/nontouchrecyclerview/ExampleMain.java#L80))
 
     holder.itemView.setFocusable(true);
     holder.itemView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
