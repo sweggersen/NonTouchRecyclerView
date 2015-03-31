@@ -1,5 +1,5 @@
 # NonTouchRecyclerView
-RecyclerView for devices using arrow keys or D-Pad to navigate. (Works with touch as well!) The cell selector is the backbone of this library and can be heavily customized.
+RecyclerView for devices using arrow keys or D-Pad to navigate. (Ofcourse it Works with touch, but then the selector won't show) The cell selector is the backbone of this library and can be heavily customized.
 
 ### Screenshot (from the example)
 ![Screenshot](https://raw.githubusercontent.com/samyboy89/NonTouchRecyclerView/master/images/screenshot.png)
