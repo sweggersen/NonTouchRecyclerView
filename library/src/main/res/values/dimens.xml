@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="defStrokePosition">0</integer>
+    <integer name="defSelectorPosition">0</integer>
+    <item name="defFillAlpha" format="float" type="dimen">0.5</item>
+    <dimen name="defStrokeWidth">0dp</dimen>
+    <dimen name="defCornerRadius">5dp</dimen>
+    <dimen name="defStrokeMarginLeft">0dp</dimen>
+    <dimen name="defStrokeMarginTop">0dp</dimen>
+    <dimen name="defStrokeMarginRight">0dp</dimen>
+    <dimen name="defStrokeMarginBottom">0dp</dimen>
+    <dimen name="defStrokeSpacingLeft">0dp</dimen>
+    <dimen name="defStrokeSpacingTop">0dp</dimen>
+    <dimen name="defStrokeSpacingRight">0dp</dimen>
+    <dimen name="defStrokeSpacingBottom">0dp</dimen>
+</resources>

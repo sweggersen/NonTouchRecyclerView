@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<developmen.awesome.library.StrokeRecyclerView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/stroke_recycler_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/recycle_view_padding"
+    android:clipToPadding="false"
+    android:background="@android:color/darker_gray"
+    app:selectorPosition="over"
+    app:strokePosition="inside"
+    app:strokeColor="@android:color/white"
+    app:strokeWidth="@dimen/cell_stroke_width"
+    app:cornerRadius="@dimen/cell_corner_radius"
+    app:marginBottom="@dimen/cell_bottom_margin"/>

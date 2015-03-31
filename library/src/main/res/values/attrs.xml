@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="StrokeRecyclerView">
+        <attr name="selectorPosition" format="enum" >
+            <enum name="over" value="0"/>
+            <enum name="under" value="1"/>
+        </attr>
+        <attr name="strokePosition" format="enum">
+            <enum name="inside" value="0"/>
+            <enum name="center" value="1"/>
+            <enum name="outside" value="2"/>
+        </attr>
+        <attr name="filled" format="boolean"/>
+        <attr name="fillAlpha" format="float"/>
+        <attr name="fillColor" format="color"/>
+        <attr name="strokeColor" format="color"/>
+        <attr name="strokeWidth" format="dimension"/>
+        <attr name="cornerRadius" format="dimension"/>
+        <attr name="marginLeft" format="dimension"/>
+        <attr name="marginTop" format="dimension"/>
+        <attr name="marginRight" format="dimension"/>
+        <attr name="marginBottom" format="dimension"/>
+        <attr name="spacingLeft" format="dimension"/>
+        <attr name="spacingTop" format="dimension"/>
+        <attr name="spacingRight" format="dimension"/>
+        <attr name="spacingBottom" format="dimension"/>
+    </declare-styleable>
+</resources>

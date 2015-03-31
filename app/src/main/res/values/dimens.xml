@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <integer name="num_columns">4</integer>
+    <dimen name="recycle_view_padding">28dp</dimen>
+    <dimen name="cell_margin">6dp</dimen>
+
+    <dimen name="cell_corner_radius">3dp</dimen>
+    <dimen name="cell_bottom_margin">3dp</dimen>
+    <dimen name="cell_stroke_width">2dp</dimen>
+
+    <dimen name="text_size">18sp</dimen>
+
+</resources>
