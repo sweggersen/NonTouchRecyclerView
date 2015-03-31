@@ -9,7 +9,7 @@ RecyclerView for devices using arrow keys or D-Pad to navigate. (Of course it Wo
 1) Add the library as a dependency to your build.gradle
 
     dependencies {
-        compile 'info.awesomedevelopment:nontouch-recyclerview:1.0.0-SNAPSHOT@aar'
+        compile 'info.awesomedevelopment:nontouch-recyclerview:1.0.1-SNAPSHOT@aar'
     }
     
     
@@ -91,6 +91,14 @@ nt_spacingLeft | dimen | Spacing left, this pushes the selector outwards on the 
 nt_spacingTop | dimen | Spacing top, this pushes the selector outwards on the top edge
 nt_spacingRight | dimen | Spacing right, this pushes the selector outwards on the right edge
 nt_spacingBottom | dimen | Spacing bottom, this pushes the selector outwards on the bottom edge 
+
+## Changelog
+
+### Version 1.0.1
+Added animation to cell selector. Set nt_animateSelectorChanges to true to have the selector animate to the next selection.
+
+### Version 1.0.0
+Created library for upcoming TVLauncher 4 application [Google+ page](https://plus.google.com/u/0/communities/105478564940183531371). Added to own library.
 
 ## Licence
 
