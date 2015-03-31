@@ -87,8 +87,8 @@ public class StrokeRecyclerView extends RecyclerView {
                     0);
 
             try {
-                mSelectorPosition = SelectorPosition.getSelectorPosition(a.getInteger(R.styleable.StrokeRecyclerView_selectorPosition, getResources().getInteger(R.integer.defSelectorPosition)));
-                mStrokePosition = StrokePosition.getStrokePosition(a.getInteger(R.styleable.StrokeRecyclerView_strokePosition, getResources().getInteger(R.integer.defStrokePosition)));
+                mSelectorPosition = SelectorPosition.getSelectorPosition(a.getInteger(R.styleable.StrokeRecyclerView_nt_selectorPosition, getResources().getInteger(R.integer.defSelectorPosition)));
+                mStrokePosition = StrokePosition.getStrokePosition(a.getInteger(R.styleable.StrokeRecyclerView_nt_strokePosition, getResources().getInteger(R.integer.defStrokePosition)));
                 mIsFilled = a.getBoolean(R.styleable.StrokeRecyclerView_nt_filled, getResources().getBoolean(R.bool.defIsFilled));
                 mFillAlpha = a.getFloat(R.styleable.StrokeRecyclerView_nt_fillAlpha, typedValue.getFloat());
                 mFillColor = a.getColor(R.styleable.StrokeRecyclerView_nt_fillColor, getResources().getColor(R.color.defFillColor));
