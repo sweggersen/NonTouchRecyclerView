@@ -40,9 +40,9 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 
 public class StrokeRecyclerView extends RecyclerView {
 
+    private AnimatorSet mSelectorAnimationSet = new AnimatorSet();
     private Drawable mStrokeCell;
     private Rect mStrokeCellPrevBound;
-    private Rect mStrokeCellOriginalBounds;
     private Rect mStrokeCellCurrentBounds;
 
     private SelectorPosition mSelectorPosition;
@@ -155,7 +155,7 @@ public class StrokeRecyclerView extends RecyclerView {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                animSetXY.cancel();
+                mSelectorAnimationSet.cancel();
 
                 mStrokeCellCurrentBounds.offsetTo(mStrokeCellCurrentBounds.left - dx, mStrokeCellCurrentBounds.top - dy);
                 performSelectorAnimation();
@@ -239,7 +239,9 @@ public class StrokeRecyclerView extends RecyclerView {
         mSelectorPosition = position;
     }
 
-    AnimatorSet animSetXY = new AnimatorSet();
+    public void setAnimateSelectorChanges(boolean animate) {
+        mAnimateSelectorChanges = animate;
+    }
 
     /**
      * Sets a stroke to the given view
@@ -249,8 +251,8 @@ public class StrokeRecyclerView extends RecyclerView {
         mStrokeColor = focused ? mStrokeColorFocused : mStrokeColorSelected;
 
         if (mAnimateSelectorChanges && mStrokeCell != null) {
-            if (animSetXY.isRunning()) {
-                animSetXY.cancel();
+            if (mSelectorAnimationSet.isRunning()) {
+                mSelectorAnimationSet.cancel();
 
                 setCorrectBounds(view);
                 performSelectorAnimation();
@@ -291,10 +293,10 @@ public class StrokeRecyclerView extends RecyclerView {
                 invalidate();
             }
         });
-        animSetXY.playTogether(x, y);
-        animSetXY.setInterpolator(new AccelerateDecelerateInterpolator());
-        animSetXY.setDuration(200);
-        animSetXY.start();
+        mSelectorAnimationSet.playTogether(x, y);
+        mSelectorAnimationSet.setInterpolator(new AccelerateDecelerateInterpolator());
+        mSelectorAnimationSet.setDuration(200);
+        mSelectorAnimationSet.start();
     }
 
     /**
@@ -342,12 +344,11 @@ public class StrokeRecyclerView extends RecyclerView {
         int top = v.getTop() - ((h_scaled - h) / 2);
         int left = v.getLeft() - ((w_scaled - w) / 2);
 
-        mStrokeCellOriginalBounds = new Rect(
+        mStrokeCellCurrentBounds = new Rect(
                 (int) (left - mStrokeSpacingLeft),
                 (int) (top - mStrokeSpacingTop),
                 (int) (left + w_scaled + mStrokeSpacingRight),
                 (int) (top + h_scaled + mStrokeSpacingBottom));
-        mStrokeCellCurrentBounds = new Rect(mStrokeCellOriginalBounds);
     }
 
     /**
