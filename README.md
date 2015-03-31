@@ -84,8 +84,10 @@ You can also set a focus and a selected color. Why you might want to do this is 
     
 6) Watch the magic happen!
 
-attr  | type | comment
-------------- | -------------
+## Attributes
+
+| attr|type | comment
+------------- | -------------|----------
 nt_selectorPosition  | enum | Place the selector over or under the cell
 nt_strokePosition  | enum | Stroke can be placed inside, center or ourside of the edge of the cell
 nt_filled | boolean | Indicate if the selector should have a fill color
@@ -94,21 +96,15 @@ nt_fillColor | color | Fill color
 nt_strokeColor | color | Stroke color
 nt_strokeWidth | dimen | The strokes width. If set to 0, there will be no stroke
 nt_cornerRadius | dimen | Corner radius of the selector. 0 is square.
-nt_marginLeft | dimen | Margin left, this pushes the selector inwards 
-nt_marginLeft | dimen | Margin left, this pushes the selector inwards 
-nt_marginLeft | dimen | Margin left, this pushes the selector inwards 
-nt_marginLeft | dimen | Margin left, this pushes the selector inwards 
-nt_marginLeft | dimen | Margin left, this pushes the selector inwards 
-        <attr name="nt_strokeWidth" format="dimension"/>
-        <attr name="nt_cornerRadius" format="dimension"/>
-        <attr name="nt_marginLeft" format="dimension"/>
-        <attr name="nt_marginTop" format="dimension"/>
-        <attr name="nt_marginRight" format="dimension"/>
-        <attr name="nt_marginBottom" format="dimension"/>
-        <attr name="nt_spacingLeft" format="dimension"/>
-        <attr name="nt_spacingTop" format="dimension"/>
-        <attr name="nt_spacingRight" format="dimension"/>
-        <attr name="nt_spacingBottom" format="dimension"/>
+nt_marginLeft | dimen | Margin left, this pushes the selector inwards on the left edge
+nt_marginTop | dimen | Margin top, this pushes the selector inwards on the top edge
+nt_marginRight | dimen | Margin right, this pushes the selector inwards on the right edge
+nt_marginBottom | dimen | Margin bottom, this pushes the selector inwards on the bottom edge 
+nt_spacingLeft | dimen | Spacing left, this pushes the selector outwards on the left edge
+nt_spacingTop | dimen | Spacing top, this pushes the selector outwards on the top edge
+nt_spacingRight | dimen | Spacing right, this pushes the selector outwards on the right edge
+nt_spacingBottom | dimen | Spacing bottom, this pushes the selector outwards on the bottom edge 
+
 ## Licence
 
     Copyright 2015 Sam Mathias Weggersen
