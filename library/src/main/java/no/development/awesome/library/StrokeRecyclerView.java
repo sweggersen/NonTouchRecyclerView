@@ -14,6 +14,7 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
@@ -41,9 +42,13 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 public class StrokeRecyclerView extends RecyclerView {
 
     private AnimatorSet mSelectorAnimationSet = new AnimatorSet();
+    private Handler mSelectorDeselectHandler = new Handler();
     private Drawable mStrokeCell;
     private Rect mStrokeCellPrevBound;
     private Rect mStrokeCellCurrentBounds;
+
+    private boolean mKeepViewStill;
+    private Handler mScrollByHandler = new Handler();
 
     private SelectorPosition mSelectorPosition;
     private StrokePosition mStrokePosition;
@@ -51,11 +56,11 @@ public class StrokeRecyclerView extends RecyclerView {
     private boolean mIsFilled;
     private float mFillAlpha;
     private int mFillColor;
+    private int mFillColorSelected;
     private float mCornerRadiusX;
     private float mCornerRadiusY;
     private float mStrokeThickness;
     private int mStrokeColor;
-    private int mStrokeColorFocused;
     private int mStrokeColorSelected;
     private float mStrokeMarginLeft;
     private float mStrokeMarginTop;
@@ -100,11 +105,12 @@ public class StrokeRecyclerView extends RecyclerView {
                 mIsFilled = a.getBoolean(R.styleable.StrokeRecyclerView_nt_filled, getResources().getBoolean(R.bool.defIsFilled));
                 mFillAlpha = a.getFloat(R.styleable.StrokeRecyclerView_nt_fillAlpha, typedValue.getFloat());
                 mFillColor = a.getColor(R.styleable.StrokeRecyclerView_nt_fillColor, getResources().getColor(R.color.defFillColor));
+                mFillColorSelected = a.getColor(R.styleable.StrokeRecyclerView_nt_fillColorSelected, getResources().getColor(R.color.defFillColorSelected));
                 mCornerRadiusX = a.getDimension(R.styleable.StrokeRecyclerView_nt_cornerRadius, getResources().getDimension(R.dimen.defCornerRadius));
                 mCornerRadiusY = a.getDimension(R.styleable.StrokeRecyclerView_nt_cornerRadius, getResources().getDimension(R.dimen.defCornerRadius));
                 mStrokeThickness = a.getDimension(R.styleable.StrokeRecyclerView_nt_strokeWidth, getResources().getDimension(R.dimen.defStrokeWidth));
-                mStrokeColorFocused = a.getColor(R.styleable.StrokeRecyclerView_nt_strokeColor, getResources().getColor(R.color.defStrokeColor));
-                mStrokeColorSelected = a.getColor(R.styleable.StrokeRecyclerView_nt_strokeColor, getResources().getColor(R.color.defStrokeColor));
+                mStrokeColor = a.getColor(R.styleable.StrokeRecyclerView_nt_strokeColor, getResources().getColor(R.color.defStrokeColor));
+                mStrokeColorSelected = a.getColor(R.styleable.StrokeRecyclerView_nt_strokeColorSelected, getResources().getColor(R.color.defStrokeColor));
                 mStrokeMarginLeft = a.getDimension(R.styleable.StrokeRecyclerView_nt_marginLeft, getResources().getDimension(R.dimen.defStrokeMarginLeft));
                 mStrokeMarginTop = a.getDimension(R.styleable.StrokeRecyclerView_nt_marginTop, getResources().getDimension(R.dimen.defStrokeMarginTop));
                 mStrokeMarginRight = a.getDimension(R.styleable.StrokeRecyclerView_nt_marginRight, getResources().getDimension(R.dimen.defStrokeMarginRight));
@@ -123,11 +129,12 @@ public class StrokeRecyclerView extends RecyclerView {
             mIsFilled = getResources().getBoolean(R.bool.defIsFilled);
             mFillAlpha = typedValue.getFloat();
             mFillColor = getResources().getColor(R.color.defFillColor);
+            mFillColorSelected = getResources().getColor(R.color.defFillColorSelected);
             mCornerRadiusX = getResources().getDimension(R.dimen.defCornerRadius);
             mCornerRadiusY = getResources().getDimension(R.dimen.defCornerRadius);
             mStrokeThickness = getResources().getDimension(R.dimen.defStrokeWidth);
-            mStrokeColorFocused = getResources().getColor(R.color.defStrokeColor);
-            mStrokeColorSelected = getResources().getColor(R.color.defStrokeColor);
+            mStrokeColor = getResources().getColor(R.color.defStrokeColor);
+            mStrokeColorSelected = getResources().getColor(R.color.defStrokeColorSelected);
             mStrokeMarginLeft = getResources().getDimension(R.dimen.defStrokeMarginLeft);
             mStrokeMarginTop = getResources().getDimension(R.dimen.defStrokeMarginTop);
             mStrokeMarginRight = getResources().getDimension(R.dimen.defStrokeMarginRight);
@@ -150,6 +157,7 @@ public class StrokeRecyclerView extends RecyclerView {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
+
             }
 
             @Override
@@ -158,9 +166,9 @@ public class StrokeRecyclerView extends RecyclerView {
                 mSelectorAnimationSet.cancel();
 
                 mStrokeCellCurrentBounds.offsetTo(mStrokeCellCurrentBounds.left - dx, mStrokeCellCurrentBounds.top - dy);
-                performSelectorAnimation();
+                if (!mKeepViewStill) mStrokeCellPrevBound = new Rect(mStrokeCellCurrentBounds);
 
-                // clearHighlightedView();
+                performSelectorAnimation();
             }
         });
         setOnTouchListener(new OnTouchListener() {
@@ -170,6 +178,19 @@ public class StrokeRecyclerView extends RecyclerView {
                 return false;
             }
         });
+    }
+
+    @Override
+    public void scrollBy(int x, int y) {
+        mKeepViewStill = true;
+        mScrollByHandler.removeCallbacksAndMessages(null);
+        mScrollByHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mKeepViewStill = false;
+            }
+        }, 100);
+        super.scrollBy(x, y);
     }
 
     public void setStrokePosition(StrokePosition strokePosition) {
@@ -192,14 +213,9 @@ public class StrokeRecyclerView extends RecyclerView {
 
     public void setStrokeColor(int color) {
         mStrokeColorSelected = color;
-        mStrokeColorFocused = color;
     }
 
-    public void setFocusColor(int color) {
-        mStrokeColorFocused = color;
-    }
-
-    public void setSelectedColor(int color) {
+    public void setStrokeColorSelected(int color) {
         mStrokeColorSelected = color;
     }
 
@@ -231,6 +247,10 @@ public class StrokeRecyclerView extends RecyclerView {
         mFillColor = color;
     }
 
+    public void setFillColorSelected(int color) {
+        mFillColorSelected = color;
+    }
+
     public void setFillAlpha(float alpha) {
         mFillAlpha = alpha;
     }
@@ -244,41 +264,55 @@ public class StrokeRecyclerView extends RecyclerView {
     }
 
     /**
-     * Sets a stroke to the given view
+     * Clears the cell selector
+     */
+    public void clearHighlightedView() {
+        mStrokeCell = null;
+        mStrokeCellPrevBound = null;
+        invalidate();
+        requestLayout();
+    }
+
+    /**
+     * Sets a cell selector to the given view
      */
     public void highlightView(final View view, boolean focused) {
-        mStrokeColor = focused ? mStrokeColorFocused : mStrokeColorSelected;
-
         if (view == null) return;
+
+        if (!focused) {
+            mSelectorDeselectHandler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    hardUpdateSelector(view, hasFocus());
+                }
+            }, 50);
+            return;
+        }
+
+        mSelectorDeselectHandler.removeCallbacksAndMessages(null);
         if (mAnimateSelectorChanges && mStrokeCell != null) {
-            if (mSelectorAnimationSet.isRunning()) {
-                mSelectorAnimationSet.cancel();
-                prepareAndPerformSelectorAnimation(view);
-            } else {
-                mStrokeCellPrevBound = new Rect(mStrokeCellCurrentBounds);
-                prepareAndPerformSelectorAnimation(view);
-            }
+            prepareAndPerformSelectorAnimation(view, mSelectorAnimationSet.isRunning());
         } else {
-            hardUpdateSelector(view);
+            hardUpdateSelector(view, true);
         }
     }
 
-    private void prepareAndPerformSelectorAnimation(View view) {
-        if (mStrokeColorFocused == mStrokeColorSelected) {
-            setCorrectBounds(view);
-        } else {
-            mStrokeCell = getAndAddStrokedView(view);
-        }
-        performSelectorAnimation();
-    }
-
-    private void hardUpdateSelector(View view) {
-        mStrokeCell = getAndAddStrokedView(view);
-        mStrokeCell.setBounds(mStrokeCellCurrentBounds);
+    private void hardUpdateSelector(View view, boolean focused) {
+        addStrokedView(view, focused, true);
         invalidate();
     }
 
+    private void prepareAndPerformSelectorAnimation(View view, boolean running) {
+        if (running) mSelectorAnimationSet.cancel();
+        else mStrokeCellPrevBound = new Rect(mStrokeCellCurrentBounds);
+
+        addStrokedView(view, true, !running);
+        performSelectorAnimation();
+    }
+
     private void performSelectorAnimation() {
+        if (mStrokeCellPrevBound == null) return;
+
         ObjectAnimator y = ObjectAnimator.ofInt(mStrokeCell, "y", mStrokeCellPrevBound.top, mStrokeCellCurrentBounds.top);
         ObjectAnimator x = ObjectAnimator.ofInt(mStrokeCell, "x", mStrokeCellPrevBound.left, mStrokeCellCurrentBounds.left);
 
@@ -307,25 +341,16 @@ public class StrokeRecyclerView extends RecyclerView {
     }
 
     /**
-     * Clears the stroke
-     */
-    public void clearHighlightedView() {
-        mStrokeCell = null;
-        mStrokeCellPrevBound = null;
-        invalidate();
-        requestLayout();
-    }
-
-    /**
      * Creates the stroke cell with the appropriate bitmap and of appropriate
      * size. The stroke cell's BitmapDrawable is drawn on top or under of the bitmap every
      * single time an invalidate call is made.
      */
-    private Drawable getAndAddStrokedView(View v) {
-        setCorrectBounds(v);
-
-        if (mStrokeCell != null) return mStrokeCell;
-        return new BitmapDrawable(getResources(), getBitmap(v.getWidth(), v.getHeight()));
+    private void addStrokedView(View view, boolean focused, boolean setBounds) {
+        setCorrectBounds(view);
+        if (mStrokeCell == null || mStrokeColor != mStrokeColorSelected) {
+            mStrokeCell = new BitmapDrawable(getResources(), getBitmap(view.getWidth(), view.getHeight(), focused));
+        }
+        if (setBounds) mStrokeCell.setBounds(mStrokeCellCurrentBounds);
     }
 
     private void setCorrectBounds(View v) {
@@ -359,7 +384,7 @@ public class StrokeRecyclerView extends RecyclerView {
     /**
      * Returns a stroked bitmap.
      */
-    private Bitmap getBitmap(int w, int h) {
+    private Bitmap getBitmap(int w, int h, boolean focused) {
         Bitmap bitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
         switch (mStrokePosition) {
@@ -371,7 +396,7 @@ public class StrokeRecyclerView extends RecyclerView {
 
                 Paint stroke = new Paint(Paint.ANTI_ALIAS_FLAG);
                 stroke.setStyle(Paint.Style.FILL);
-                stroke.setColor(mStrokeColor);
+                stroke.setColor(focused ? mStrokeColor : mStrokeColorSelected);
                 canvas.drawRoundRect(fillRect, mCornerRadiusX, mCornerRadiusY, stroke);
 
                 Paint cutout = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -381,7 +406,7 @@ public class StrokeRecyclerView extends RecyclerView {
                 if (mIsFilled) {
                     Paint fill = new Paint(Paint.ANTI_ALIAS_FLAG);
                     fill.setStyle(Paint.Style.FILL);
-                    fill.setColor(mFillColor);
+                    fill.setColor(focused ? mFillColor : mFillColorSelected);
                     int alpha = (int) Math.ceil(mFillAlpha * 255);
                     fill.setAlpha(alpha);
                     canvas.drawRoundRect(cutoutRect, mCornerRadiusX, mCornerRadiusY, fill);

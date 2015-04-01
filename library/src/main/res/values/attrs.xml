@@ -14,7 +14,9 @@
         <attr name="nt_filled" format="boolean"/>
         <attr name="nt_fillAlpha" format="float"/>
         <attr name="nt_fillColor" format="color"/>
+        <attr name="nt_fillColorSelected" format="color"/>
         <attr name="nt_strokeColor" format="color"/>
+        <attr name="nt_strokeColorSelected" format="color"/>
         <attr name="nt_strokeWidth" format="dimension"/>
         <attr name="nt_cornerRadius" format="dimension"/>
         <attr name="nt_marginLeft" format="dimension"/>
