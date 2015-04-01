@@ -47,15 +47,10 @@ You can modify the View programtically in Java as well, like this:
     recyclerView.setFillAlpha(0.3f);
     recyclerView.setStrokeWidth(0f);
 
-#### Extras
-There are some extra setters when you do it in runtime. The first one is that you can change the corner radius of the x and y sides of the selector.
+##### Extras
+You can change the corner radius of the x and y sides of the selector programmatically.
 
     recyclerView.setCornerRadius(float x, float y);
-    
-You can also set a focus and a selected color. Why you might want to do this is to indicate to the user that a cell is selected, but another View now has focus. Focus = currently focused and selected. Selected = only selected.
-
-    recyclerView.setFocusColor(int color);
-    recyclerView.setSelectedColor(int color);
     
 5) In RecyclerView.Adapters onBindViewHolder() method, add these lines: (See [Example](https://github.com/samyboy89/NonTouchRecyclerView/blob/master/app/src/main/java/no/development/awesome/nontouchrecyclerview/ExampleMain.java#L80))
 
@@ -80,7 +75,9 @@ nt_animateSelectorChanges | boolean | Cell will animate into position on each ke
 nt_filled | boolean | Indicate if the selector should have a fill color
 nt_fillAlpha | float | Opacity of the fill color
 nt_fillColor | color | Fill color
+nt_fillColorSelected | color | Fill color when not in focus
 nt_strokeColor | color | Stroke color
+nt_strokeColorSelected | color | Stroke color when not in focus
 nt_strokeWidth | dimen | The strokes width. If set to 0, there will be no stroke
 nt_cornerRadius | dimen | Corner radius of the selector. 0 is square.
 nt_marginLeft | dimen | Margin left, this pushes the selector inwards on the left edge
