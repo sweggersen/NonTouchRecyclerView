@@ -55,6 +55,7 @@ public class StrokeRecyclerView extends RecyclerView {
     private boolean mAnimateSelectorChanges;
     private boolean mIsFilled;
     private float mFillAlpha;
+    private float mFillAlphaSelected;
     private int mFillColor;
     private int mFillColorSelected;
     private float mCornerRadiusX;
@@ -88,8 +89,11 @@ public class StrokeRecyclerView extends RecyclerView {
 
     private void init(AttributeSet attrs) {
 
-        TypedValue typedValue = new TypedValue();
-        getResources().getValue(R.dimen.defFillAlpha, typedValue, true);
+        TypedValue fillAlpha = new TypedValue();
+        getResources().getValue(R.dimen.defFillAlpha, fillAlpha, true);
+
+        TypedValue fillAlphaSelected = new TypedValue();
+        getResources().getValue(R.dimen.defFillAlphaSelected, fillAlphaSelected, true);
 
         if (attrs != null) {
             TypedArray a = getContext().getTheme().obtainStyledAttributes(
@@ -103,7 +107,8 @@ public class StrokeRecyclerView extends RecyclerView {
                 mStrokePosition = StrokePosition.getStrokePosition(a.getInteger(R.styleable.StrokeRecyclerView_nt_strokePosition, getResources().getInteger(R.integer.defStrokePosition)));
                 mAnimateSelectorChanges = a.getBoolean(R.styleable.StrokeRecyclerView_nt_animateSelectorChanges, getResources().getBoolean(R.bool.defAnimateSelectorChanges));
                 mIsFilled = a.getBoolean(R.styleable.StrokeRecyclerView_nt_filled, getResources().getBoolean(R.bool.defIsFilled));
-                mFillAlpha = a.getFloat(R.styleable.StrokeRecyclerView_nt_fillAlpha, typedValue.getFloat());
+                mFillAlpha = a.getFloat(R.styleable.StrokeRecyclerView_nt_fillAlpha, fillAlpha.getFloat());
+                mFillAlphaSelected = a.getFloat(R.styleable.StrokeRecyclerView_nt_fillAlphaSelected, fillAlphaSelected.getFloat());
                 mFillColor = a.getColor(R.styleable.StrokeRecyclerView_nt_fillColor, getResources().getColor(R.color.defFillColor));
                 mFillColorSelected = a.getColor(R.styleable.StrokeRecyclerView_nt_fillColorSelected, getResources().getColor(R.color.defFillColorSelected));
                 mCornerRadiusX = a.getDimension(R.styleable.StrokeRecyclerView_nt_cornerRadius, getResources().getDimension(R.dimen.defCornerRadius));
@@ -127,7 +132,8 @@ public class StrokeRecyclerView extends RecyclerView {
             mStrokePosition = StrokePosition.getStrokePosition(getResources().getInteger(R.integer.defStrokePosition));
             mAnimateSelectorChanges = getResources().getBoolean(R.bool.defAnimateSelectorChanges);
             mIsFilled = getResources().getBoolean(R.bool.defIsFilled);
-            mFillAlpha = typedValue.getFloat();
+            mFillAlpha = fillAlpha.getFloat();
+            mFillAlphaSelected = fillAlphaSelected.getFloat();
             mFillColor = getResources().getColor(R.color.defFillColor);
             mFillColorSelected = getResources().getColor(R.color.defFillColorSelected);
             mCornerRadiusX = getResources().getDimension(R.dimen.defCornerRadius);
@@ -407,7 +413,7 @@ public class StrokeRecyclerView extends RecyclerView {
                     Paint fill = new Paint(Paint.ANTI_ALIAS_FLAG);
                     fill.setStyle(Paint.Style.FILL);
                     fill.setColor(focused ? mFillColor : mFillColorSelected);
-                    int alpha = (int) Math.ceil(mFillAlpha * 255);
+                    int alpha = (int) Math.ceil((focused ? mFillAlpha : mFillAlphaSelected) * 255);
                     fill.setAlpha(alpha);
                     canvas.drawRoundRect(cutoutRect, mCornerRadiusX, mCornerRadiusY, fill);
                 }

@@ -15,3 +15,25 @@
     app:nt_strokeWidth="@dimen/cell_stroke_width"
     app:nt_cornerRadius="@dimen/cell_corner_radius"
     app:nt_marginBottom="@dimen/cell_bottom_margin"/>
+
+<!--
+HOLO SELECTOR
+<no.development.awesome.library.StrokeRecyclerView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/stroke_recycler_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/recycle_view_padding"
+    android:clipToPadding="false"
+    android:background="@android:color/darker_gray"
+    app:nt_animateSelectorChanges="false"
+    app:nt_selectorPosition="over"
+    app:nt_strokePosition="inside"
+    app:nt_strokeColor="#33b5e5"
+    app:nt_strokeWidth="1dp"
+    app:nt_cornerRadius="0dp"
+    app:nt_filled="true"
+    app:nt_fillAlpha="0.3"
+    app:nt_fillColor="#33b5e5"/>
+    -->

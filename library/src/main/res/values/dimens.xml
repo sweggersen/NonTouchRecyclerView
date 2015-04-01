@@ -3,6 +3,7 @@
     <integer name="defStrokePosition">0</integer>
     <integer name="defSelectorPosition">0</integer>
     <item name="defFillAlpha" format="float" type="dimen">0.5</item>
+    <item name="defFillAlphaSelected" format="float" type="dimen">0.5</item>
     <dimen name="defStrokeWidth">0dp</dimen>
     <dimen name="defCornerRadius">5dp</dimen>
     <dimen name="defStrokeMarginLeft">0dp</dimen>
