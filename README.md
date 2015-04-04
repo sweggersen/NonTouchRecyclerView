@@ -43,6 +43,7 @@ You can modify the View programtically in Java as well, like this:
 
     StrokeRecyclerView recyclerView = (StrokeRecyclerView) findViewById(R.id.stroke_recycler_view);
     recyclerView.setSelectorPosition(StrokeRecyclerView.SelectorPosition.OVER);
+    recyclerView.setFilled(true);
     recyclerView.setFillColor(Color.BLUE);
     recyclerView.setFillAlpha(0.3f);
     recyclerView.setStrokeWidth(0f);
@@ -74,6 +75,7 @@ nt_strokePosition  | enum | Stroke can be placed inside, center or ourside of th
 nt_animateSelectorChanges | boolean | Cell will animate into position on each keyDown if enabled
 nt_filled | boolean | Indicate if the selector should have a fill color
 nt_fillAlpha | float | Opacity of the fill color
+nt_fillAlphaSelected | float | Opacity of the fill color when not in focus
 nt_fillColor | color | Fill color
 nt_fillColorSelected | color | Fill color when not in focus
 nt_strokeColor | color | Stroke color
