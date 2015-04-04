@@ -22,6 +22,7 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:21.0.0'
 }
 
+/*
 uploadArchives {
     configuration = configurations.archives
     repositories.mavenDeployer {
@@ -61,4 +62,4 @@ uploadArchives {
             }
         }
     }
-}
+}*/
