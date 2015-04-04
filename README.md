@@ -1,3 +1,6 @@
+
+[![License](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
+
 # NonTouchRecyclerView
 RecyclerView for devices using arrow keys or D-Pad to navigate. (Of course it Works with touch, but then the selector won't show) The cell selector is the backbone of this library and can be heavily customized.
 
