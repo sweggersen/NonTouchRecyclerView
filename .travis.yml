@@ -27,9 +27,9 @@ android:
     - build-tools-22.0.1
 
     # Additional components
-    #- extra-google-google_play_services
-    #- extra-google-m2repository
-    #- extra-android-m2repository
+    # - extra-google-google_play_services
+    # - extra-google-m2repository
+    # - extra-android-m2repository
 
   licenses:
      - 'android-sdk-license-.+'
